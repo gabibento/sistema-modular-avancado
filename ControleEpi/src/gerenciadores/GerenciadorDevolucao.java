@@ -13,13 +13,16 @@ import java.util.Scanner;
 public class GerenciadorDevolucao {
     Scanner scanner = new Scanner(System.in);
     private List<Devolucao> devolucoes;
+    private List<String> logs;
+    private static String log;
     private final String CAMINHO_ARQUIVO = "devolucoes.txt";
 
     GerenciadorEmprestimo gerenciadorEmprestimo;
 
-    public GerenciadorDevolucao(GerenciadorEmprestimo gerenciadorEmprestimo) {
+    public GerenciadorDevolucao(GerenciadorEmprestimo gerenciadorEmprestimo, List<String> logs) {
         devolucoes = new ArrayList<>();
         this.gerenciadorEmprestimo = gerenciadorEmprestimo;
+        this.logs = logs;
         carregarDoArquivo();
     }
 
@@ -34,7 +37,9 @@ public class GerenciadorDevolucao {
             Devolucao devolucao = new Devolucao(emprestimo, data);
             devolucoes.add(devolucao);
             salvarNoArquivo();
-            System.out.println("Devolução criada com sucesso!");
+            log = "Devolução criada com sucesso!";
+            System.out.println(log);
+            logs.add(log);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -95,7 +100,9 @@ public class GerenciadorDevolucao {
                     throw new IllegalArgumentException("Opção inválida. Tente novamente!");
                 }
                 salvarNoArquivo();
-                System.out.println("Devolução atualizada com sucesso!\n");
+                log = "Devolução atualizada com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Digite um número válido.");
                 scanner.nextLine();
@@ -111,7 +118,9 @@ public class GerenciadorDevolucao {
             if(devolucao != null){
                 devolucoes.remove(devolucao);
                 salvarNoArquivo();
-                System.out.println("Devolução removida com sucesso!");
+                log = "Devolução removida com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

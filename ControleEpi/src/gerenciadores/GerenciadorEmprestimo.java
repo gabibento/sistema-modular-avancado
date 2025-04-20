@@ -15,17 +15,20 @@ import java.util.Scanner;
 public class GerenciadorEmprestimo {
     Scanner scanner = new Scanner(System.in);
     private List<Emprestimo> emprestimos;
+    private List<String> logs;
     private final String CAMINHO_ARQUIVO = "emprestimos.txt";
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static String log;
 
     GerenciadorUsuario gerenciadorUsuario;
     GerenciadorEpi gerenciadorEpi;
 
-    public GerenciadorEmprestimo(GerenciadorUsuario gerenciadorUsuario, GerenciadorEpi gerenciadorEpi) {
+    public GerenciadorEmprestimo(GerenciadorUsuario gerenciadorUsuario, GerenciadorEpi gerenciadorEpi, List<String> logs) {
         emprestimos = new ArrayList<>();
         this.gerenciadorUsuario = gerenciadorUsuario;
         this.gerenciadorEpi = gerenciadorEpi;
-        carregarDoArquivo(); // carrega ao iniciar
+        this.logs = logs;
+        carregarDoArquivo();
     }
 
     public void criarEmprestimo() {
@@ -44,7 +47,9 @@ public class GerenciadorEmprestimo {
                 emprestimos.add(novoEmprestimo);
                 epi.setQuantidade(epi.getQuantidade() - 1);
                 salvarNoArquivo();
-                System.out.println("Empréstimo criado com sucesso!");
+                log = "Empréstimo criado com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -142,7 +147,9 @@ public class GerenciadorEmprestimo {
                 }
 
                 salvarNoArquivo();
-                System.out.println("Empréstimo atualizado com sucesso!");
+                log = "Empréstimo atualizado com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Digite um número válido.");
                 scanner.nextLine();
@@ -159,7 +166,9 @@ public class GerenciadorEmprestimo {
                 emprestimos.remove(emprestimo);
                 emprestimo.getEpi().setQuantidade(emprestimo.getEpi().getQuantidade() + 1);
                 salvarNoArquivo();
-                System.out.println("Empréstimo removido com sucesso!");
+                log = "Empréstimo removido com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

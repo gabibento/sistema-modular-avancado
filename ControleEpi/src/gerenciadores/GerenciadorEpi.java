@@ -8,10 +8,13 @@ import java.util.*;
 public class GerenciadorEpi {
     Scanner scanner = new Scanner(System.in);
     private List<Epi> epis;
+    private List<String> logs;
+    private static String log;
     private final String CAMINHO_ARQUIVO = "epis.txt";
 
-    public GerenciadorEpi() {
+    public GerenciadorEpi(List<String> logs) {
         epis = new ArrayList<>();
+        this.logs = logs;
         carregarDoArquivo();
     }
 
@@ -28,7 +31,9 @@ public class GerenciadorEpi {
             epis.add(epi);
 
             salvarNoArquivo();
-            System.out.println("EPI adicionada com sucesso!");
+            log = "EPI " + epi.getNome() + " adicionada com sucesso!";
+            System.out.println(log);
+            logs.add(log);
         } catch (Exception e) {
             System.out.println("Erro ao cadastrar EPI");
             scanner.nextLine();
@@ -87,7 +92,9 @@ public class GerenciadorEpi {
                 }
 
                 salvarNoArquivo();
-                System.out.println("EPI atualizada com sucesso!\n");
+                log = "EPI " + epi.getNome() + " atualizada com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Digite um número válido.");
                 scanner.nextLine();
@@ -103,7 +110,10 @@ public class GerenciadorEpi {
             if (epi != null) {
                 epis.remove(epi);
                 salvarNoArquivo();
-                System.out.println("EPI removida com sucesso!");
+
+                log = "EPI " + epi.getNome() + " removida com sucesso!";
+                System.out.println(log);
+                logs.add(log);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -11,10 +11,12 @@ import java.util.Scanner;
 public class GerenciadorUsuario {
     Scanner scanner = new Scanner(System.in);
     private List<Usuario> usuarios;
+    private List<String> logs;
     private final String CAMINHO_ARQUIVO = "usuarios.txt";
 
-    public GerenciadorUsuario() {
+    public GerenciadorUsuario(List<String> logs) {
         usuarios = new ArrayList<>();
+        this.logs = logs;
         carregarDoArquivo();
     }
 
@@ -30,6 +32,7 @@ public class GerenciadorUsuario {
         salvarNoArquivo();
 
         System.out.println("Usuário cadastrado com sucesso!");
+        logs.add("Usuário cadastrado: " + nome + " (" + email + ")");
     }
 
     public void listarUsuarios() {
@@ -86,6 +89,7 @@ public class GerenciadorUsuario {
 
                 salvarNoArquivo();
                 System.out.println("Usuário atualizado com sucesso!\n");
+                logs.add("Usuário " + usuario.getNome() + " atualizado com sucesso");
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Digite um número válido.");
                 scanner.nextLine();
@@ -102,6 +106,7 @@ public class GerenciadorUsuario {
                 usuarios.remove(usuario);
                 salvarNoArquivo();
                 System.out.println("Usuário removido com sucesso!");
+                logs.add("Usuário removido: " + usuario.getNome());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -137,4 +142,5 @@ public class GerenciadorUsuario {
             System.out.println("Erro ao carregar dados do arquivo: " + e.getMessage());
         }
     }
+
 }

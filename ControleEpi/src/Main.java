@@ -3,27 +3,43 @@ import gerenciadores.GerenciadorEmprestimo;
 import gerenciadores.GerenciadorEpi;
 import gerenciadores.GerenciadorUsuario;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     static final Scanner scanner = new Scanner(System.in);
-    static final GerenciadorEpi gerenciadorEpi = new GerenciadorEpi();
-    static final GerenciadorUsuario gerenciadorUsuario = new GerenciadorUsuario();
-    static final GerenciadorEmprestimo gerenciadorEmprestimo = new GerenciadorEmprestimo(gerenciadorUsuario, gerenciadorEpi);
-    static final GerenciadorDevolucao gerenciadorDevolucao = new GerenciadorDevolucao(gerenciadorEmprestimo);
+    static List<String> logs = new ArrayList<>();
+    static final GerenciadorEpi gerenciadorEpi = new GerenciadorEpi(logs);
+    static final GerenciadorUsuario gerenciadorUsuario = new GerenciadorUsuario(logs);
+    static final GerenciadorEmprestimo gerenciadorEmprestimo = new GerenciadorEmprestimo(gerenciadorUsuario, gerenciadorEpi, logs);
+    static final GerenciadorDevolucao gerenciadorDevolucao = new GerenciadorDevolucao(gerenciadorEmprestimo, logs);
 
     public static void main(String[] args) {
         processarMenu();
         scanner.close();
+        exibirLogs();
     }
 
     private static void processarMenu() {
         while (true) {
             int opcao = escolherMenuPrincipal();
             if (opcao == 0) break;
+            if(opcao == 5) {
+                exibirLogs();
+                continue;
+            }
 
             processarOpcaoPrincipal(opcao);
+        }
+    }
+    private static void exibirLogs() {
+        if (logs.isEmpty()) {
+            System.out.println("Nenhuma ação registrada.");
+        } else {
+            System.out.println("=== LOG DE AÇÕES ===");
+            logs.forEach(System.out::println);
         }
     }
 
@@ -34,14 +50,15 @@ public class Main {
                         "2. CRUD de EPIs\n" +
                         "3. CRUD de Empréstimos\n" +
                         "4. CRUD de Devoluções\n" +
+                        "5. Exibir Logs\n" +
                         "0. Sair");
                 System.out.print("Escolha uma opção: ");
                 int opcao = scanner.nextInt();
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();
                 return opcao;
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite um número inteiro.");
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();
             }
         }
     }
@@ -56,11 +73,11 @@ public class Main {
                         "5. Voltar");
                 System.out.print("Escolha uma opção: ");
                 int opcao = scanner.nextInt();
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();
                 return opcao;
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida! Digite um número inteiro.");
-                scanner.nextLine();  // Limpar o buffer
+                scanner.nextLine();
             }
         }
     }
@@ -119,4 +136,5 @@ public class Main {
             default -> System.out.println("Opção inválida.");
         }
     }
+
 }
