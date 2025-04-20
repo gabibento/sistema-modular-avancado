@@ -126,6 +126,15 @@ public class GerenciadorDevolucao {
             System.out.println(e.getMessage());
         }
     }
+    private List<Devolucao> buscarPorNomeParcial(){
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        return devolucoes.stream().filter(devolucao -> devolucao.getEmprestimo().getEpi().getNome().contains(nome)).toList();
+    }
+    public void exibirResultadoBusca(){
+        buscarPorNomeParcial().forEach(System.out::println);
+    }
+
 
     private void salvarNoArquivo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO))) {

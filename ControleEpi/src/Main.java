@@ -70,7 +70,8 @@ public class Main {
                         "2. Listar\n" +
                         "3. Atualizar\n" +
                         "4. Remover\n" +
-                        "5. Voltar");
+                        "5. Buscar por nome parcial\n" +
+                        "6. Voltar");
                 System.out.print("Escolha uma opção: ");
                 int opcao = scanner.nextInt();
                 scanner.nextLine();
@@ -85,7 +86,7 @@ public class Main {
     private static void processarOpcaoPrincipal(int opcao) {
         while (true) {
             int opcaoCRUD = escolherCRUD();
-            if (opcaoCRUD == 5) break;
+            if (opcaoCRUD == 6) break;
 
             switch (opcao) {
                 case 1 -> processarCRUDUsuario(opcaoCRUD);
@@ -103,6 +104,7 @@ public class Main {
             case 2 -> gerenciadorUsuario.listarUsuarios();
             case 3 -> gerenciadorUsuario.atualizarUsuario();
             case 4 -> gerenciadorUsuario.removerUsuario();
+            case 5 -> gerenciadorUsuario.exibirResultadoBusca();
             default -> System.out.println("Opção inválida.");
         }
     }
@@ -113,6 +115,7 @@ public class Main {
             case 2 -> gerenciadorEpi.listarEpis();
             case 3 -> gerenciadorEpi.atualizarEpi();
             case 4 -> gerenciadorEpi.removerEpi();
+            case 5 -> gerenciadorEpi.exibirResultadoBusca();
             default -> System.out.println("Opção inválida.");
         }
     }
@@ -123,6 +126,7 @@ public class Main {
             case 2 -> gerenciadorEmprestimo.listarEmprestimos();
             case 3 -> gerenciadorEmprestimo.atualizarEmprestimo();
             case 4 -> gerenciadorEmprestimo.removerEmprestimo();
+            case 5 -> gerenciadorEmprestimo.exibirResultadoBusca();
             default -> System.out.println("Opção inválida.");
         }
     }
@@ -133,6 +137,7 @@ public class Main {
             case 2 -> gerenciadorDevolucao.listarDevolucoes();
             case 3 -> gerenciadorDevolucao.atualizarDevolucao();
             case 4 -> gerenciadorDevolucao.removerDevolucao();
+            case 5 -> gerenciadorDevolucao.exibirResultadoBusca();
             default -> System.out.println("Opção inválida.");
         }
     }

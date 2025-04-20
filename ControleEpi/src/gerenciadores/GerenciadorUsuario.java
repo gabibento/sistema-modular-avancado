@@ -98,6 +98,14 @@ public class GerenciadorUsuario {
             }
         }
     }
+    private List<Usuario> buscarPorNomeParcial(){
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        return usuarios.stream().filter(usuario -> usuario.getNome().contains(nome)).toList();
+    }
+    public void exibirResultadoBusca(){
+        buscarPorNomeParcial().forEach(System.out::println);
+    }
 
     public void removerUsuario() {
         try {

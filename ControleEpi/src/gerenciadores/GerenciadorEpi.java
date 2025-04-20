@@ -1,6 +1,7 @@
 package gerenciadores;
 
 import entidades.Epi;
+import entidades.Usuario;
 
 import java.io.*;
 import java.util.*;
@@ -118,6 +119,14 @@ public class GerenciadorEpi {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+    private List<Epi> buscarPorNomeParcial(){
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        return epis.stream().filter(epi -> epi.getNome().contains(nome)).toList();
+    }
+    public void exibirResultadoBusca(){
+        buscarPorNomeParcial().forEach(System.out::println);
     }
 
     private void salvarNoArquivo() {

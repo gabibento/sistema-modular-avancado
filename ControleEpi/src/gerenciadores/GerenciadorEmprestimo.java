@@ -182,6 +182,14 @@ public class GerenciadorEmprestimo {
         }
         return null;
     }
+    private List<Emprestimo> buscarPorNomeParcial(){
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        return emprestimos.stream().filter(emprestimo -> emprestimo.getEpi().getNome().contains(nome)).toList();
+    }
+    public void exibirResultadoBusca(){
+        buscarPorNomeParcial().forEach(System.out::println);
+    }
 
     private void salvarNoArquivo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CAMINHO_ARQUIVO))) {
